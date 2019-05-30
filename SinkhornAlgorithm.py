@@ -3,7 +3,7 @@ from scipy.linalg import expm
 
 
 def dmAlfa(alfa, r, c, M):
-    mylambda=1/10
+    mylambda=1/1000#jezeli lmbda=1 to daje problem bo niema machine precision, co jest napisane na kodzie Cuturi
     #while True:
     return dLambda(mylambda,r,c,M,alfa,0)
         ##if vectorsDistance(answer[1],entropyV(r)+entropyV(c)-alfa)<=0.01:
@@ -12,7 +12,8 @@ def dmAlfa(alfa, r, c, M):
 def entropyV(vector):
     sum = 0
     for i in vector:
-        sum -= i * np.log(i)
+        if i!=0:
+            sum -= i * np.log(i)
     return sum
 
 
@@ -20,7 +21,8 @@ def entropyM(matrix):
     sum = 0
     for i in matrix:
         for j in i:
-            sum -= j * np.log(j)
+            if j != 0:
+                sum -= j * np.log(j)
     return sum
 
 
@@ -109,9 +111,11 @@ def dLambda(myLambda, R, C, M,alfa,iteration):
     #U = K.*M
     #D = sum(u. * (U * v));
     PLambda=np.matmul(np.matmul(np.diag(u),K),np.diag(v))
-    if vectorsDistance(PLambda,entropyV(R)+entropyV(pos(C))-alfa)<=0.01 or iteration>100:
+    '''
+    if np.abs(entropyM(PLambda)-entropyV(R)+entropyV(pos(C))-alfa)<=0.01 or iteration>500:
         return d
     else:
-        return dLambda(myLambda*1.5,R,C,M,alfa*1.5,iteration+1)
-
+        return dLambda(myLambda*2,R,C,M,alfa*1.5,iteration+1)
+    '''
+    return d
 

@@ -17,16 +17,21 @@ def crateCostMatrix(nr):#nr=number of colors in histogram for example if histogr
 
 
 def main():
-    R = np.array([0, 0.10, 0.14, 0.12, 0.12, 0.12, 0.20, 0.20])
+
+    R = np.array([0, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1])
     #C= np.array([0, 0.20, 0.20, 0.12, 0.12, 0.12, 0.12, 0.12])
-    C = np.array([0, 0.12, 0.12, 0.12, 0.12, 0.12, 0.20, 0.20])
+    C = np.array([1, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00])
     M=crateCostMatrix(2)
     #print M
     B=np.matrix(M)
     M=np.asarray(B)
     #print type(M)
-    print SinkhornAlgorithm.dmAlfa(1/10,R,C,M)
-'''
+    #R=R.reshape((2,2,2))
+    #C=C.reshape((2,2,2))
+    print SinkhornAlgorithm.dmAlfa(1/1000,R,C,M)
+
+
+    '''
     # READ COST MATRIX
     f = open("C:\\Users\\Andrea\\Desktop\\TxtForPythonLicencjat\\testout.txt", "r")
     MCostMatrix = f.read()
