@@ -76,14 +76,18 @@ def dLambda(myLambda, R, C, M,alfa,iteration):
     tmp2=np.diag(tmp)
     #print K
     Kdiagonal=np.matmul(tmp2,K)#matmul=multiplication for matrix/////multiply=element-whise multiplication
+    #print np.divide(C,np.matmul(K.transpose(),u))
     iter=0
 
 
-    #print iteration
+    #print np.divide(C,np.matmul(K.transpose(),u))
     while True:
-        #u=np.multiply(ones,np.matmul(Kdiagonal,np.divide(C,np.matmul(K.transpose(),u))))
-        u = np.divide(R,(np.matmul(K, np.divide (C,np.matmul(np.transpose(K),u)))))
-        if vectorsDistance(u,oldU)<0.01 or iter>10000:#odleglosc vektora a nie array equal
+        u=np.divide(ones,np.matmul(Kdiagonal,np.divide(C,np.matmul(K.transpose(),u))))
+        #u = np.divide(R,(np.matmul(K, np.divide (C,np.matmul(np.transpose(K),u)))))
+        #print (np.matmul(K, np.divide (C,np.matmul(np.transpose(K),u))))
+        if vectorsDistance(u,oldU)<0.0001 or iter>10000:#odleglosc vektora a nie array equal
+           # if vectorsDistance(u,oldU)<0.0001:
+                #print (u,oldU)
             break;
 
 
@@ -100,6 +104,7 @@ def dLambda(myLambda, R, C, M,alfa,iteration):
     u=np.divide(R,np.matmul(K,v))
     #u = a. / (K * v);
     d=np.multiply(u,np.matmul(np.multiply(K,M),v))
+    #print d
     d=d.sum()
     #U = K.*M
     #D = sum(u. * (U * v));
