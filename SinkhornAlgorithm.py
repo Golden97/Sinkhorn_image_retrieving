@@ -1,9 +1,8 @@
 import numpy as np
-from scipy.linalg import expm
 
 
 def dmAlfa(alfa, r, c, M):
-    mylambda=1/1000#jezeli lmbda=1 to daje problem bo niema machine precision, co jest napisane na kodzie Cuturi
+    mylambda=1/10#jezeli lmbda=1 to daje problem bo niema machine precision, co jest napisane na kodzie Cuturi
     #while True:
     return dLambda(mylambda,r,c,M,alfa,0)
         ##if vectorsDistance(answer[1],entropyV(r)+entropyV(c)-alfa)<=0.01:

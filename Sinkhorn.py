@@ -1,6 +1,9 @@
 import numpy as np
 import SinkhornAlgorithm
-import panda as pd
+import ReadRGB
+
+
+
 def crateCostMatrix(nr):#nr=number of colors in histogram for example if histogram is [4][4][4] nr=4
     M=''
     for x in range(0,nr):
@@ -18,9 +21,12 @@ def crateCostMatrix(nr):#nr=number of colors in histogram for example if histogr
 
 def main():
 
-    R = np.array([0, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1])
+    #R = np.array([0, 0.10, 0.10, 0.10, 0.10, 0.10, 0.30, 0.20])
+    R = np.array([0.020336 ,  0.022928 ,  0.00488  , 0.02884267 ,0.45736533 ,0.10637867,
+ 0.34859733, 0.010672  ])
     #C= np.array([0, 0.20, 0.20, 0.12, 0.12, 0.12, 0.12, 0.12])
-    C = np.array([1, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00])
+    C = np.array([0.020336 ,  0.022928 ,  0.00488  , 0.02884267 ,0.45736533 ,0.10637867,
+ 0.34859733, 0.010672  ])
     M=crateCostMatrix(2)
     #print M
     B=np.matrix(M)
@@ -28,7 +34,15 @@ def main():
     #print type(M)
     #R=R.reshape((2,2,2))
     #C=C.reshape((2,2,2))
-    print SinkhornAlgorithm.dmAlfa(1/1000,R,C,M)
+    #print (SinkhornAlgorithm.dmAlfa(1/10,R,C,M))
+    path=r"C:\Users\Andrea\Desktop\TestImage\zebra1.jpg"
+    R=ReadRGB.readImage(path)
+    path = r"C:\Users\Andrea\Desktop\TestImage\zebra2.jpg"
+    C=ReadRGB.readImage(path)
+    print (R)
+    print(C)
+    print (SinkhornAlgorithm.dmAlfa(1/10,R,C,M))
+
 
 
     '''
