@@ -23,16 +23,16 @@ def crateCostMatrix(nr):#nr=number of colors in histogram for example if histogr
 def main():
 
 
-    #R = np.array([0, 0.10, 0.10, 0.10, 0.10, 0.10, 0.30, 0.20])
-    #C= np.array([0, 0.20, 0.20, 0.12, 0.12, 0.12, 0.12, 0.12]
-    M=crateCostMatrix(6)
+    R = np.array([1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
+    C= np.array([1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
+    M=crateCostMatrix(2)
     B=np.matrix(M)
     M=np.asarray(B)
     path=r"C:\Users\Andrea\Desktop\TestImage\zebra2.jpg"
-    R=ReadRGB.readImage(path)
+    #R=ReadRGB.readImage(path)
     path = r"C:\Users\Andrea\Desktop\TestImage\zebra1.jpg"
 
-    C=ReadRGB.readImage(path)
+    #C=ReadRGB.readImage(path)
     #print (R)
     #print(C)
     print (SinkhornAlgorithm.dLambda(1/10,R,C,M,0))
