@@ -22,6 +22,7 @@ def crateCostMatrix(nr):#nr=number of colors in histogram for example if histogr
 
 def main():
 
+
     #R = np.array([0, 0.10, 0.10, 0.10, 0.10, 0.10, 0.30, 0.20])
     #C= np.array([0, 0.20, 0.20, 0.12, 0.12, 0.12, 0.12, 0.12]
     M=crateCostMatrix(6)
