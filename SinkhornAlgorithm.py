@@ -2,16 +2,14 @@ import numpy as np
 
 
 def dmAlfa(alfa, r, c, M):
-    mylambda=1/10#jezeli lmbda=1 to daje problem bo niema machine precision, co jest napisane na kodzie Cuturi
-    #while True:
-    return dLambda(mylambda,r,c,M,alfa,0)
-        ##if vectorsDistance(answer[1],entropyV(r)+entropyV(c)-alfa)<=0.01:
+    mylambda = 1 / 10
+    return dLambda(mylambda, r, c, M, 0)
 
 
 def entropyV(vector):
     sum = 0
     for i in vector:
-        if i!=0:
+        if i != 0:
             sum -= i * np.log(i)
     return sum
 
@@ -32,8 +30,9 @@ def KL(P, Q):
             sum += j * (np.log(j) / np.log(Q[i][j]))
     return sum
 
+
 def mapHistogram(histogram):
-    vector=[]
+    vector = []
     for i in histogram:
         for j in i:
             for k in j:
@@ -41,80 +40,62 @@ def mapHistogram(histogram):
     return vector
 
 
-def vectorsDistance(a,b):
+def vectorsDistance(a, b):
     return np.linalg.norm(a - b)
 
+
 def pos(lst):
-    return [x for x in lst if x > 0] or None#i posti dove ce zero ricordarli per toglierli in M? (k forse anche adesso chiedo)
+    return [x for x in lst if x > 0] or None
 
-def posMat(lst,M):
-    i=0
-    delete=[]
+
+def posMat(lst, M):
+    i = 0
+    delete = []
     for x in lst:
-        if x==0:
+        if x == 0:
             delete.append(i)
-        i=i+1
-    #print delete
-    #print np.delete(M, delete,0)
-    return np.delete(M, delete,0)
+        i = i + 1
+    return np.delete(M, delete, 0)
 
 
-
-def dLambda(myLambda, R, C, M,alfa,iteration):
-   # print M
-    M=posMat(R,M)
-   # print M
-    K=np.exp(-myLambda*M)
-    R=pos(R)
-    #print R
-    #print K
-    #print -myLambda*M
+def dLambda(myLambda, R, C, M, iteration):
+    M = posMat(R, M)
+    K = np.exp(-myLambda * M)
+    R = pos(R)
     u = np.ones(len(R))
     ones = np.ones(len(u))
-    u=np.divide(u, len(R))
-    oldU=u
-    tmp=np.divide(ones,R)
-    tmp2=np.diag(tmp)
-    #print K
-    Kdiagonal=np.matmul(tmp2,K)#matmul=multiplication for matrix/////multiply=element-whise multiplication
-    #print np.divide(C,np.matmul(K.transpose(),u))
-    iter=0
-
-
-    #print np.divide(C,np.matmul(K.transpose(),u))
+    u = np.divide(u, len(R))
+    oldU = u
+    tmp = np.divide(ones, R)
+    tmp2 = np.diag(tmp)
+    Kdiagonal = np.matmul(tmp2, K)  # matmul=multiplication for matrix/////multiply=element-whise multiplication
+    iter = 0
     while True:
-        u=np.divide(ones,np.matmul(Kdiagonal,np.divide(C,np.matmul(K.transpose(),u))))
-        #u = np.divide(R,(np.matmul(K, np.divide (C,np.matmul(np.transpose(K),u)))))
-        #print (np.matmul(K, np.divide (C,np.matmul(np.transpose(K),u))))
-        if vectorsDistance(u,oldU)<0.0001 or iter>10000:#odleglosc vektora a nie array equal
-           # if vectorsDistance(u,oldU)<0.0001:
-                #print (u,oldU)
+        u = np.divide(ones, np.matmul(Kdiagonal, np.divide(C, np.matmul(K.transpose(), u))))
+        if vectorsDistance(u, oldU) < 0.0001 or iter > 10000:
             break;
 
+        iter = iter + 1
+        oldU = u
 
-        iter=iter+1
-        oldU=u
-    #vpiece=np.matmul(K.transpose(),u)
-    #v=np.divide(C,vpiece)
+    vpiece = np.matmul(u.transpose(), K)
+    v = np.divide(C, vpiece.transpose())
+
+    # v = b. / ((u'*K)');
+    u = np.divide(R, np.matmul(K, v))
+    # u = a. / (K * v);
+    d = np.multiply(u, np.matmul(np.multiply(K, M), v))
+    d = d.sum()
+    # U = K.*M
+    # D = sum(u. * (U * v));
+    # PLambda=np.matmul(np.matmul(np.diag(u),K),np.diag(v))
+
+    return d
 
 
-    vpiece = np.matmul( u.transpose(),K)
-    v=np.divide(C,vpiece.transpose())
-
-    #v = b. / ((u'*K)');
-    u=np.divide(R,np.matmul(K,v))
-    #u = a. / (K * v);
-    d=np.multiply(u,np.matmul(np.multiply(K,M),v))
-    #print d
-    d=d.sum()
-    #U = K.*M
-    #D = sum(u. * (U * v));
-    PLambda=np.matmul(np.matmul(np.diag(u),K),np.diag(v))
-    '''
+'''
     if np.abs(entropyM(PLambda)-entropyV(R)+entropyV(pos(C))-alfa)<=0.01 or iteration>500:
         return d
     else:
         return dLambda(myLambda*2,R,C,M,alfa*1.5,iteration+1)
     '''
-    return d
-
