@@ -38,6 +38,7 @@ def main():
     path=r"C:\Users\Andrea\Desktop\TestImage\zebra1.jpg"
     R=ReadRGB.readImage(path)
     path = r"C:\Users\Andrea\Desktop\TestImage\zebra2.jpg"
+
     C=ReadRGB.readImage(path)
     print (R)
     print(C)
