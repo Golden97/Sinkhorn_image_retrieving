@@ -61,6 +61,8 @@ def posMat(lst, M):
 def dLambda(myLambda, R, C, M, iteration):
     M = posMat(R, M)
     K = np.exp(-myLambda * M)
+    #print (K,"\n")
+    #print(np.multiply(K,M)," K*m\n")
     R = pos(R)
     u = np.ones(len(R))
     ones = np.ones(len(u))
