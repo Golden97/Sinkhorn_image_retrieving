@@ -22,12 +22,13 @@ def readImage(path,precision):
     im=Image.open(path,"r")
     hist=createHistogram(precision,list(im.getdata()))
     #hist=np.histogram(im,64)
-    print("\n",hist)
+    #print("\n",hist)
     #a=plt(hist)
     #plt.show()
-    plt.hist(hist,density=False, bins=len(hist))  # density
-    plt.ylabel('Probability')
-    #plt.xticks(range(0,len(hist)))
-    #plt.yticks(hist)
+    #plt.hist(hist,density=False, bins=len(hist))  # density
+    plt.bar(np.arange(0,len(hist)),np.divide(hist,hist.sum()))
+    plt.ylabel('Pixels')
+    plt.ylabel('RGB Values')
+    plt.autoscale(True)
     plt.show()
     return np.divide(hist,hist.sum())

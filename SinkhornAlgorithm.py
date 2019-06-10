@@ -57,8 +57,10 @@ def posMat(lst, M):
         i = i + 1
     return np.delete(M, delete, 0)
 
+def isNaN(num):
+    return num != num
 
-def dLambda(myLambda, R, C, M, iteration):
+def dLambda(myLambda, R, C, M, actuald):
     M = posMat(R, M)
     K = np.exp(-myLambda * M)
     #print (K,"\n")
@@ -91,8 +93,9 @@ def dLambda(myLambda, R, C, M, iteration):
     # U = K.*M
     # D = sum(u. * (U * v));
     # PLambda=np.matmul(np.matmul(np.diag(u),K),np.diag(v))
-
-    return d
+    if isNaN(d):
+        return actuald
+    return dLambda(myLambda*1.5,R,C,M,d)
 
 
 '''

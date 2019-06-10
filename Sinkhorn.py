@@ -25,18 +25,18 @@ def main():
 
     #R = np.array([1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
     #C= np.array([1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
-    M=crateCostMatrix(2)
+    M=crateCostMatrix(8)
     B=np.matrix(M)
     M=np.asarray(B)
     #print (M,"\n")
-    path=r"C:\Users\Andrea\Desktop\TestImage\zebra2.jpg"
-    R=ReadRGB.readImage(path,128)
-    path = r"C:\Users\Andrea\Desktop\TestImage\zebra1.jpg"
+    path=r"C:\Users\Andrea\Desktop\TestImage\black.jpg"
+    R=ReadRGB.readImage(path,32)
+    path = r"C:\Users\Andrea\Desktop\TestImage\horse1.jpg"
 
-    C=ReadRGB.readImage(path,128)
+    C=ReadRGB.readImage(path,32)
     #print (R,"\n")
     #print(C,"\n")
-    print (SinkhornAlgorithm.dLambda(1/10,R,C,M,0))
+    print (SinkhornAlgorithm.dLambda(50,R,C,M,-1))
     print (emd(R,C,M))
 
 
